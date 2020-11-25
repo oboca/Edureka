@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d9a84d90-07cf-400b-ad23-31a5ff33ba81" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="5f93329d-791a-420c-8509-192c12597545" basePath="/ovi">
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<flow name="exercitiiFlow" doc:id="3a72c7b2-783b-4827-9e63-91611583fcad" >
+		<http:listener doc:name="Listener" doc:id="a9d0fae0-1767-4562-b113-fdf617679801" config-ref="HTTP_Listener_config" path="/ovi"/>
+		<set-payload value="ovi" doc:name="Set Payload" doc:id="12bf85d8-8f74-4196-8fae-cf720f89c8fc" />
+		<http:request method="GET" doc:name="Request" doc:id="8e3b1650-21d2-476a-8368-0b6d9601410e" config-ref="HTTP_Request_configuration" path="/dot"/>
+		<logger level="INFO" doc:name="Logger" doc:id="bd1e6e0b-7b09-40e3-828c-3195b6e06be1" message="payload"/>
+	</flow>
+	<flow name="dot" doc:id="f05a6a3f-7c6f-464e-88a6-2c8c32b1a857" >
+		<http:listener doc:name="Listener" doc:id="defb04d1-9a2c-4c7a-b24c-f4ae88091f4b" config-ref="HTTP_Listener_config" path="/dot"/>
+		<set-payload value="dot payload" doc:name="Set Payload" doc:id="92e15989-ef00-4dd7-8b88-0af1eabf0760" />
+	</flow>
+</mule>
